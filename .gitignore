@@ -1,0 +1,13 @@
+# Node.js
+node_modules/
+npm-debug.log
+.env
+
+# Python
+__pycache__/
+*.pyc
+venv/
+
+# macOS or Windows junk
+.DS_Store
+Thumbs.db
