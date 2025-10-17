@@ -1,16 +1,16 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
- "scripts": {
-  "start": "node src/app.js",
-  "dev": "nodemon src/app.js"
-},
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "description": "RAC Reallocation System backend",
+  "main": "src/app.js",
   "type": "module",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
+  "keywords": [],
+  "author": "Prasanth Gannavarapu",
+  "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
