@@ -1,27 +1,24 @@
-// src/controllers/trainController.js
-import Train from "../models/trainModel.js";
+// backend/src/controllers/trainController.js
+import mongoose from "mongoose";
 
-// Get all trains
-export const getTrains = async (req, res) => {
+export const getTrainStations = async (req, res) => {
   try {
-    const trains = await Train.find();
-    res.json(trains);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+    const { trainNo } = req.params;
+    const db = mongoose.connection;
 
-// Add or update train (admin)
-export const upsertTrain = async (req, res) => {
-  try {
-    const { trainNumber, trainName, route } = req.body;
-    const train = await Train.findOneAndUpdate(
-      { trainNumber },
-      { trainName, route },
-      { upsert: true, new: true }
-    );
-    res.json(train);
+    // 👇 Directly access the collection that matches the train number
+    const TrainCollection = db.collection(trainNo);
+
+    // 👇 Fetch all station records
+    const stations = await TrainCollection.find({}).toArray();
+
+    if (!stations.length) {
+      return res.status(404).json({ message: `No stations found for train ${trainNo}` });
+    }
+
+    res.status(200).json(stations);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("❌ Error fetching train stations:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };

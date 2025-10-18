@@ -1,10 +1,15 @@
-// src/routes/passengerRoutes.js
 import express from "express";
-import { getPassengers, updatePassenger } from "../controllers/passengerController.js";
+import {
+  getAllPassengers,
+  getPassengersByTrain,
+  getPassengerByPNR
+} from "../controllers/passengerController.js"; // ✅ Correct path
 
-const router = express.Router();
+const router = express.Router(); // ✅ You missed this line earlier
 
-router.get("/", getPassengers);
-router.post("/", updatePassenger);
+// Routes
+router.get("/", getAllPassengers);
+router.get("/train/:train_no", getPassengersByTrain);
+router.get("/pnr/:pnr", getPassengerByPNR);
 
 export default router;
