@@ -1,6 +1,6 @@
-// backend/src/routes/trainRoutes.js
+// src/routes/trainRoutes.js
 import express from "express";
-import { getTrainStations } from "../controllers/trainController.js";
+import { getTrainStations } from "../controllers/trainController.js";  // FIXED: getTrainStations
 
 const router = express.Router();
 

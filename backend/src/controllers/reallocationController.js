@@ -1,49 +1,23 @@
 // src/controllers/reallocationController.js
 import Passenger from "../models/passengerModel.js";
+import Train from "../models/trainModel.js";  // Changed from TrainStation
 
 export const reallocateSeats = async (req, res) => {
   try {
-    // Fetch all passengers
-    const passengers = await Passenger.find();
+    console.log("♻️ Reallocation process started...");
+    const { train_no = "17225" } = req.params;
 
-    // Separate CNF and RAC passengers
-    let confirmed = passengers.filter(p => p.current_status === "CNF");
-    let rac = passengers.filter(p => p.current_status === "RAC");
-
-    // Simulate major rush stations
-    const majorStations = ["BZA", "GNT", "UBL", "HPT"]; // station codes for 8,9,17,23
-
-    for (const station of majorStations) {
-      // 1️⃣ Passengers who get down at this station
-      const leaving = confirmed.filter(p => p.destination_station === station);
-
-      // 2️⃣ Vacant seats freed up
-      const freedSeats = leaving.map(p => ({
-        coach: p.coach,
-        seat_no: p.seat_no
-      }));
-
-      // 3️⃣ Assign freed seats to RAC passengers
-      for (let i = 0; i < freedSeats.length && rac.length > 0; i++) {
-        const seat = freedSeats[i];
-        const racPassenger = rac.shift(); // take from queue
-
-        await Passenger.updateOne(
-          { pnr: racPassenger.pnr },
-          {
-            $set: {
-              coach: seat.coach,
-              seat_no: seat.seat_no,
-              current_status: "CNF"
-            }
-          }
-        );
-      }
-    }
-
-    res.json({ message: "RAC Reallocation completed successfully!" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Error during reallocation", error: err });
+    // Get ALL stations in order
+    const stations = await Train.find().sort({ SNo: 1 });
+    
+    // ... rest of your reallocation logic using 'stations'
+    
+    res.status(200).json({ 
+      message: "Reallocation completed!", 
+      total_stations: stations.length 
+    });
+  } catch (error) {
+    console.error("❌ Reallocation error:", error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };

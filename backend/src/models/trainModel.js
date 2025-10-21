@@ -2,17 +2,19 @@
 import mongoose from "mongoose";
 
 const trainSchema = new mongoose.Schema({
-  trainNumber: { type: Number, required: true, unique: true },
-  trainName: { type: String, required: true },
-  route: [
-    {
-      stationName: { type: String, required: true },
-      arrivalTime: { type: String, required: true },
-      departureTime: { type: String, required: true },
-      distanceFromStart: { type: Number, required: true }
-    }
-  ]
-});
+  _id: { type: String },
+  SNo: { type: Number },
+  Code: { type: String },
+  Stn_Name: { type: String },
+  Zone: { type: String },
+  Div: { type: String },
+  Arr: { type: String },
+  Dep: { type: String },
+  Halt: { type: Number },
+  PF: { type: String },
+  Dist: { type: Number },
+  Day: { type: Number },
+  Remark: { type: String }
+}, { collection: "17225", _id: false });
 
-const Train = mongoose.model("Train", trainSchema);
-export default Train;
+export default mongoose.model("Train", trainSchema);

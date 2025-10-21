@@ -3,6 +3,9 @@ import express from "express";
 import { reallocateSeats } from "../controllers/reallocationController.js";
 
 const router = express.Router();
-router.get("/reallocate", reallocateSeats);
+
+// Fixed: Two routes - one with train_no, one without
+router.post("/reallocate/:train_no", reallocateSeats);
+router.post("/reallocate", reallocateSeats);
 
 export default router;
