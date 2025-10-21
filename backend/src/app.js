@@ -5,6 +5,9 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import trainRoutes from "./routes/trainRoutes.js";
 import passengerRoutes from "./routes/passengerRoutes.js";
+import reallocationRoutes from "./routes/reallocationRoutes.js";
+
+
 
 dotenv.config();
 
@@ -18,6 +21,8 @@ app.use(express.json());
 // Routes
 app.use("/api/trains", trainRoutes);
 app.use("/api/passengers", passengerRoutes);
+app.use("/api", reallocationRoutes);
+
 
 // Connect DB and start server
 connectDB();
